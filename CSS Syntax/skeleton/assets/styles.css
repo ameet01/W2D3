@@ -1,0 +1,41 @@
+body {
+  margin-left: 10px;
+  font-family: Arial, san-serif;
+  background-color: turquoise;
+}
+
+h1 {
+  font-size: 38px;
+}
+
+h2 {
+  font-size: 32px;
+}
+
+.ingredients-list {
+  list-style: square inside;
+}
+
+ol {
+  list-style: circle inside;
+}
+
+header > img {
+  width: 100px;
+}
+
+ul li a {
+  text-decoration: none;
+  color: inherit;
+}
+
+#reviews {
+  font-family: Papyrus;
+  text-decoration: marquee;
+  background-color: red;
+}
+
+#review-form {
+  font-family: Arial, san-serif;
+  background-color: green;
+}
