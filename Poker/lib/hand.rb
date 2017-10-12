@@ -83,10 +83,65 @@ class Hand
       return false if sorted_array[j+1] - sorted_array[j] != 1
     end
     true
-  
+
+  end
+
+  def three_of_a_kind?
+    hash = Hash.new(0)
+
+    @set.each do |i|
+      hash[i.value] += 1
+    end
+
+    return true if hash.values.include?(3)
+    false
+  end
+
+  def two_pair?
+    hash = Hash.new(0)
+
+    @set.each do |i|
+      hash[i.value] += 1
+    end
+
+    hash.values.count(2) == 2
+  end
+
+  def pair?
+    hash = Hash.new(0)
+
+    @set.each do |i|
+      hash[i.value] += 1
+    end
+
+    hash.values.count(2) == 1
+  end
+
+  def high_card
+    @set.map {|i| Card::VALUES[i.value].to_i }.sort.last
   end
 
   def parse_hand
-
+    if royal_flush?
+      return 10
+    elsif straight_flush?
+      return 9
+    elsif four_of_a_kind?
+      return 7
+    elsif full_house?
+      return 6
+    elsif flush?
+      return 5
+    elsif straight?
+      return 4
+    elsif three_of_a_kind?
+      return 3
+    elsif two_pair?
+      return 2
+    elsif pair?
+      return 1
+    else
+      return 0
+    end
   end
 end

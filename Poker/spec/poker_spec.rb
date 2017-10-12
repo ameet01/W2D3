@@ -133,6 +133,63 @@ describe "Poker Game" do
         expect(hand.straight?).to eq(false)
       end
     end
+
+    context '3 of a kind' do
+      let(:deck) { Deck.new }
+      it 'correctly evaluates a 3 of a kind' do
+        hand = Hand.new(deck)
+        hand.set = [Card.new(:nine, :club), Card.new(:nine, :heart), Card.new(:nine, :spade), Card.new(:six, :heart) ,Card.new(:five, :heart)]
+        expect(hand.three_of_a_kind?).to eq(true)
+        hand.set = [Card.new(:two, :heart), Card.new(:jack, :spade), Card.new(:nine, :diamond), Card.new(:nine, :club) ,Card.new(:five, :heart)]
+        expect(hand.three_of_a_kind?).to eq(false)
+      end
+    end
+
+    context '2 pair' do
+      let(:deck) { Deck.new }
+      it 'correctly evaluates a 2 pair' do
+        hand = Hand.new(deck)
+        hand.set = [Card.new(:nine, :club), Card.new(:nine, :heart), Card.new(:six, :spade), Card.new(:six, :heart) ,Card.new(:five, :heart)]
+        expect(hand.two_pair?).to eq(true)
+        hand.set = [Card.new(:two, :heart), Card.new(:jack, :spade), Card.new(:nine, :diamond), Card.new(:nine, :club) ,Card.new(:five, :heart)]
+        expect(hand.two_pair?).to eq(false)
+      end
+    end
+
+    context 'pair' do
+      let(:deck) { Deck.new }
+      it 'correctly evaluates a pair' do
+        hand = Hand.new(deck)
+        hand.set = [Card.new(:nine, :club), Card.new(:nine, :heart), Card.new(:jack, :spade), Card.new(:six, :heart) ,Card.new(:five, :heart)]
+        expect(hand.pair?).to eq(true)
+        hand.set = [Card.new(:two, :heart), Card.new(:jack, :spade), Card.new(:queen, :diamond), Card.new(:nine, :club) ,Card.new(:five, :heart)]
+        expect(hand.pair?).to eq(false)
+      end
+    end
+
+    context 'high card' do
+      let(:deck) { Deck.new }
+      it 'correctly evaluates a high card' do
+        hand = Hand.new(deck)
+        hand.set = [Card.new(:king, :club), Card.new(:nine, :heart), Card.new(:jack, :spade), Card.new(:six, :heart) ,Card.new(:five, :heart)]
+        expect(hand.high_card).to eq(13)
+        hand.set = [Card.new(:nine, :club), Card.new(:nine, :heart), Card.new(:queen, :spade), Card.new(:six, :heart) ,Card.new(:five, :heart)]
+        expect(hand.high_card).to eq(12)
+      end
+    end
+
+    context 'parse hand' do
+      let(:deck) { Deck.new }
+      it 'correctly parses the hand' do
+        hand = Hand.new(deck)
+        hand.set = [Card.new(:king, :club), Card.new(:nine, :heart), Card.new(:jack, :spade), Card.new(:six, :heart) ,Card.new(:five, :heart)]
+        expect(hand.parse_hand).to eq(0)
+        hand.set = [Card.new(:ace, :heart), Card.new(:king, :heart), Card.new(:queen, :heart), Card.new(:jack, :heart) ,Card.new(:ten, :heart)]
+        expect(hand.parse_hand).to eq(10)
+        hand.set = [Card.new(:nine, :heart), Card.new(:three, :heart), Card.new(:jack, :heart), Card.new(:four, :heart) ,Card.new(:five, :heart)]
+        expect(hand.parse_hand).to eq(5)
+      end
+    end
   end
 
 end
